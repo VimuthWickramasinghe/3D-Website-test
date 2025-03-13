@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link"
 import img from "@/public/logo.png";
 import { useState } from "react";
 import { headers } from "next/headers";
@@ -86,28 +87,29 @@ interface NavbarButtonsProps {
 function Navbar_Buttons({ className }: NavbarButtonsProps) {
   return (
     <div className={className}>
-      <Navbar_Button link="#Home">Home</Navbar_Button>
-      <Navbar_Button link="#Rules">Rules</Navbar_Button>
-      <Navbar_Button link="#Timeline">Timeline</Navbar_Button>
-      <Navbar_Button link="#Prizes">Prizes</Navbar_Button>
-      <Navbar_Button link="#Contact">Contact</Navbar_Button>
-      <Navbar_Button link="#Register">Register</Navbar_Button>
+      <Navbar_Button href="#Home">Home</Navbar_Button>
+      <Navbar_Button href="#Rules">Rules</Navbar_Button>
+      <Navbar_Button href="#About">About</Navbar_Button>
+      <Navbar_Button href="#Timeline">Timeline</Navbar_Button>
+      <Navbar_Button href="#Prizes">Prizes</Navbar_Button>
+      <Navbar_Button href="#Contacts">Contacts</Navbar_Button>
+      <Navbar_Button href="#Register">Register</Navbar_Button>
     </div>
   );
 }
 
 interface NavbarButtonProps {
-  link: string;
+  href: string;
   children: React.ReactNode;
 }
 
-function Navbar_Button({ link, children }: NavbarButtonProps) {
+function Navbar_Button({ href, children }: NavbarButtonProps) {
   return (
-    <a
+    <Link
       className="hover:bg-blue-700 rounded-xl py-2 px-4 mx-2 transition-colors duration-300 flex items-center justify-center"
-      href={link}
+      href={href}
     >
       {children}
-    </a>
+    </Link>
   );
 }
