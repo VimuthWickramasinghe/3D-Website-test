@@ -1,3 +1,5 @@
+"use client";
+
 export default function Footer() {
   return (
     <div className="relative w-full h-full justify-center items-center flex">

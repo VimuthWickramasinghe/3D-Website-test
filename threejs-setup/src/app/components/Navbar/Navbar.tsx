@@ -1,9 +1,8 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link"
+import Link from "next/link";
 import img from "@/public/logo.png";
-import { useState } from "react";
-import { headers } from "next/headers";
+import { useEffect, useState } from "react";
 
 const hoverColor = "hover:bg-blue-700";
 const rounded = "rounded-xl";
@@ -16,8 +15,8 @@ export default function Navbar() {
   }
 
   return (
-    <header>
-      <nav className="z-700 backdrop-blur-sm fixed w-full flex justify-between box-border p-2">
+    <div>
+      <nav className="z-700 backdrop-blur-sm fixed w-full flex justify-between p-2">
         {/* brand */}
         <div className="flex items-center">
           <div
@@ -76,15 +75,14 @@ export default function Navbar() {
           <Navbar_Buttons className="grid-cols-1 text-3xl p-auto" />
         </div>
       ) : null}
-    </header>
+    </div>
   );
 }
 
-interface NavbarButtonsProps {
-  className?: string;
+interface Navbar_ButtonsProps {
+  className: string;
 }
-
-function Navbar_Buttons({ className }: NavbarButtonsProps) {
+function Navbar_Buttons({ className }: Navbar_ButtonsProps) {
   return (
     <div className={className}>
       <Navbar_Button href="#Home">Home</Navbar_Button>
@@ -98,18 +96,32 @@ function Navbar_Buttons({ className }: NavbarButtonsProps) {
   );
 }
 
-interface NavbarButtonProps {
+interface Navbar_ButtonProps {
   href: string;
   children: React.ReactNode;
 }
-
-function Navbar_Button({ href, children }: NavbarButtonProps) {
-  return (
-    <Link
-      className="hover:bg-blue-700 rounded-xl py-2 px-4 mx-2 transition-colors duration-300 flex items-center justify-center"
-      href={href}
-    >
-      {children}
-    </Link>
-  );
+function Navbar_Button({ href, children }: Navbar_ButtonProps) {
+  if (href.includes("#")) {
+    return (
+      <button
+        onClick={() => scrollToSection({ href })}
+        className="hover:bg-blue-700 rounded-xl py-2 px-4 mx-2 transition-colors duration-300 flex items-center justify-center"
+      >
+        {children}
+      </button>
+    );
+  } else {
+    return <Link href={href}>{children}</Link>;
+  }
 }
+
+interface ScrollToSectionProps {
+  href: string;
+}
+
+const scrollToSection = ({ href }: ScrollToSectionProps) => {
+  const section = document.querySelector(href);
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth" });
+  }
+};
